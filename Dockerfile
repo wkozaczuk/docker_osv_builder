@@ -43,6 +43,7 @@ libvirt-bin \
 libyaml-cpp-dev \
 maven \
 nodejs \
+mpm \
 openjdk-8-jdk-headless \
 openssl \
 p11-kit \
@@ -62,7 +63,7 @@ RUN update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/jav
 
 # - prepare directories
 RUN mkdir /git-repos /result
-# - clone and build OSv
+# - clone OSv
 WORKDIR /git-repos
 RUN git clone https://github.com/cloudius-systems/osv.git
 WORKDIR /git-repos/osv
@@ -70,6 +71,10 @@ RUN git submodule update --init --recursive
 
 # - install Mikelangelo Capstan
 RUN curl https://raw.githubusercontent.com/mikelangelo-project/capstan/master/scripts/download | bash
+
+# Copy capstan packages 
+WORKDIR /capstan-packages
+COPY ./packages/* /capstan-packages
 
 CMD /bin/bash
 

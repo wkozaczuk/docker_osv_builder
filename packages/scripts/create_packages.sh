@@ -1,5 +1,4 @@
 #!/bin/bash
-PACKAGE_BUILD_OR_IMPORT=${1-build}
 
 source $(dirname $0)/env.sh
 OSV_BUILD=$OSV_ROOT/build/release
@@ -29,9 +28,9 @@ prepare_package() {
   cp -rf $OSV_ROOT/build/export/. $PACKAGES/$package_name
 }
 
-build_or_import_package() {
+build() {
   package_name="$1"
-  cd $PACKAGES/$package_name && $CAPSTAN package $PACKAGE_BUILD_OR_IMPORT
+  cd $PACKAGES/$package_name && $CAPSTAN package build
 }
 
 build_osv_loader_and_boostrap_package() {
@@ -48,19 +47,21 @@ build_osv_loader_and_boostrap_package() {
   prepare_package "osv.bootstrap" "OSv Bootstrap" "0.0.1"
   rm $PACKAGES/osv.bootstrap/tools/mount-nfs.so
   rm $PACKAGES/osv.bootstrap/tools/umount.so
-  build_or_import_package "osv.bootstrap"
+  build "osv.bootstrap"
 }
 
-build_run_java_packages() {
-  #Create run-java-isolated
-  #build_osv "java-isolated" all none
-  #prepare_package "osv.run-java-isolated" "Run Java apps in isolated mode" "0.0.1"
-  #build_or_import_package "osv.run-java-isolated"
-
+build_run_java_package() {
   #Create run-java-non-isolated
   build_osv "java-non-isolated" all none
-  prepare_package "osv.run-java-non-isolated" "Run Java apps in non-isolated mode" "0.0.1"
-  build_or_import_package "osv.run-java-non-isolated"
+  prepare_package "osv.run-java" "Run Java apps" "0.0.1"
+  build "osv.run-java"
+}
+
+build_run_go_package() {
+  #Create run-go-non-isolated
+  build_osv "golang" all none
+  prepare_package "osv.run-go" "Run Golang apps" "0.0.1"
+  build "osv.run-go"
 }
 
 build_openjdk8-compact_profile_package() {
@@ -71,7 +72,7 @@ build_openjdk8-compact_profile_package() {
   prepare_package "$package_name" "Zulu Open JDK 8 compact profile $profile1" "$version"
   cd $PACKAGES/${package_name}/usr/lib/jvm/ && rm jre && rmdir java && ln -s j2re-compact${profile}-image/jre jre
   cd $PACKAGES/${package_name} && cp $OSV_ROOT/modules/ca-certificates/build/etc/pki/ca-trust/extracted/java/cacerts usr/lib/jvm/jre/lib/security/
-  build_or_import_package "$package_name"
+  build "$package_name"
 }
 
 build_openjdk8-full_package() {
@@ -81,7 +82,7 @@ build_openjdk8-full_package() {
   prepare_package "$package_name" "Zulu Open JDK 8" "$version"
   #cd $PACKAGES/osv.openjdk8-zulu-full/usr/lib/jvm/ && rm jre && rmdir java && ln -s j2re-compact${profile}-image/jre jre
   cd $PACKAGES/${package_name} && cp $OSV_ROOT/modules/ca-certificates/build/etc/pki/ca-trust/extracted/java/cacerts usr/lib/jvm/jre/lib/security/
-  build_or_import_package "$package_name"
+  build "$package_name"
 }
 
 build_openjdk8-zulu-compact3-with-java-beans_package() {
@@ -91,7 +92,7 @@ build_openjdk8-zulu-compact3-with-java-beans_package() {
   prepare_package "$package_name" "Zulu Open JDK 8 with java.beans" "$version"
   cd $PACKAGES/${package_name}/usr/lib/jvm/ && rm jre && rmdir java && ln -s j2re-compact3-with-java-beans-image/jre jre
   cd $PACKAGES/${package_name} && cp $OSV_ROOT/modules/ca-certificates/build/etc/pki/ca-trust/extracted/java/cacerts usr/lib/jvm/jre/lib/security/
-  build_or_import_package "$package_name"
+  build "$package_name"
 }
 
 build_httpserver_api_package() {
@@ -102,57 +103,55 @@ build_httpserver_api_package() {
   rm $PACKAGES/osv.httpserver-api/usr/mgmt/plugins/libhttpserver-api_env.so  
   rm $PACKAGES/osv.httpserver-api/usr/mgmt/plugins/libhttpserver-api_network.so  
   rm $PACKAGES/osv.httpserver-api/usr/mgmt/plugins/libhttpserver-api_trace.so
-  build_or_import_package "osv.httpserver-api"
+  build "osv.httpserver-api"
 }
 
 build_httpserver_html5_gui_package() {
   build_osv "httpserver-html5-gui" selected none
   prepare_package "osv.httpserver-html5-gui" "OSv html5 GUI" "0.0.1"
   rm -rf $PACKAGES/osv.httpserver-html5-gui/init/
-  build_or_import_package "osv.httpserver-html5-gui"
+  build "osv.httpserver-html5-gui"
 }
 
 build_httpserver_html5_cli_package() {
   build_osv "httpserver-html5-cli" selected none
   prepare_package "osv.httpserver-html5-cli" "OSv html5 cli" "0.0.1"
   rm -rf $PACKAGES/osv.httpserver-html5-cli/init/
-  build_or_import_package "osv.httpserver-html5-cli"
+  build "osv.httpserver-html5-cli"
 }
 
 build_node_package() {
   build_osv "node" all none
   prepare_package "osv.node-6.1" "Node 6.1" "6.1"
-  build_or_import_package "osv.node-6.1"
+  build "osv.node-6.1"
 }
 
 build_lighttpd() {
   build_osv "lighttpd" all none
   prepare_package "osv.lighttpd" "Lighttpd" "1.4.45"
-  build_or_import_package "osv.lighttpd"
+  build "osv.lighttpd"
 }
 
 build_nginx() {
   build_osv "nginx" all none
   prepare_package "osv.nginx" "nginx" "1.12.1"
-  build_or_import_package "osv.nginx"
+  build "osv.nginx"
 }
 
 #clean_osv
 
-#build_osv_loader_and_boostrap_package
-#build_run_java_packages
+build_osv_loader_and_boostrap_package
+build_run_java_package
+build_run_go_package
 
 ####build_openjdk8-compact_profile_package 1 "8.0.144" #Should be identified automatically
 ####build_openjdk8-zulu-compact3-with-java-beans_package "8.0.144"
 ####build_openjdk8-full_package "8.0.144"
 
-#build_httpserver_api_package
-#build_httpserver_html5_gui_package
+build_httpserver_api_package
+build_httpserver_html5_gui_package
 build_httpserver_html5_cli_package
 
 #build_node_package
 #build_lighttpd
 #build_nginx
-
-#TODO - Java 9, nginx, 
-#Moze - python, ruby, erlang
