@@ -43,7 +43,7 @@ libvirt-bin \
 libyaml-cpp-dev \
 maven \
 nodejs \
-mpm \
+npm \
 openjdk-8-jdk-headless \
 openssl \
 p11-kit \
