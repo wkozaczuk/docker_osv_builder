@@ -24,15 +24,16 @@ automake \
 bison \
 build-essential \
 curl \
+ed \
 flex \
-gcc \
-g++-multilib \
+gcc-7 \
+g++-7-multilib \
 gdb \
 gawk \
 genromfs \
 git \
 gnutls-bin \
-libboost-all-dev \
+libboost1.65-all-dev \
 libedit-dev \
 libmaven-shade-plugin-java \
 libncurses5-dev \
@@ -41,6 +42,7 @@ libtool \
 libvirt-bin \
 libyaml-cpp-dev \
 maven \
+nodejs \
 openjdk-8-jdk-headless \
 openssl \
 p11-kit \
@@ -52,22 +54,23 @@ tcpdump \
 unzip \
 wget && apt-get autoremove && apt-get clean
 
-#ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
+RUN update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
 #
 # PREPARE ENVIRONMENT
 #
 
 # - prepare directories
-#RUN mkdir /git-repos /result
+RUN mkdir /git-repos /result
 # - clone and build OSv
-#WORKDIR /git-repos
-#RUN git clone --depth 1 https://github.com/cloudius-systems/osv.git
-#WORKDIR /git-repos/osv
-#RUN git submodule update --init --recursive
+WORKDIR /git-repos
+RUN git clone https://github.com/cloudius-systems/osv.git
+WORKDIR /git-repos/osv
+RUN git submodule update --init --recursive
 
-#WORKDIR /git-repos/osv
-#CMD scripts/build -j4 check
+# - install Mikelangelo Capstan
+RUN curl https://raw.githubusercontent.com/mikelangelo-project/capstan/master/scripts/download | bash
+
 CMD /bin/bash
 
 #
