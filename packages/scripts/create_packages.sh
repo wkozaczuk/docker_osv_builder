@@ -98,11 +98,7 @@ build_openjdk8-zulu-compact3-with-java-beans_package() {
 build_httpserver_api_package() {
   build_osv "httpserver-api" all none
   prepare_package "osv.httpserver-api" "OSv httpserver with APIs" "0.0.1"
-  rm $PACKAGES/osv.httpserver-api/usr/mgmt/plugins/libhttpserver-api_api.so  
   rm $PACKAGES/osv.httpserver-api/usr/mgmt/plugins/libhttpserver-api_app.so  
-  rm $PACKAGES/osv.httpserver-api/usr/mgmt/plugins/libhttpserver-api_env.so  
-  rm $PACKAGES/osv.httpserver-api/usr/mgmt/plugins/libhttpserver-api_network.so  
-  rm $PACKAGES/osv.httpserver-api/usr/mgmt/plugins/libhttpserver-api_trace.so
   build "osv.httpserver-api"
 }
 
@@ -126,6 +122,12 @@ build_node_package() {
   build "osv.node-6.1"
 }
 
+build_cli() {
+  build_osv "cli" all none
+  prepare_package "osv.cli" "Lighttpd" "0.0.1"
+  build "osv.cli"
+}
+
 build_lighttpd() {
   build_osv "lighttpd" all none
   prepare_package "osv.lighttpd" "Lighttpd" "1.4.45"
@@ -138,20 +140,50 @@ build_nginx() {
   build "osv.nginx"
 }
 
+build_iperf() {
+  build_osv "iperf" all none
+  prepare_package "osv.iperf" "iperf" "2.0.5"
+  build "osv.iperf"
+}
+
+build_netperf() {
+  build_osv "netperf" all none
+  prepare_package "osv.netperf" "netperf" "2.7.0"
+  build "osv.netperf"
+}
+
+build_redis-memonly() {
+  build_osv "redis-memonly" all none
+  prepare_package "osv.redis-memonly" "redis-memonly" "3.2.8"
+  build "osv.redis-memonly"
+}
+
+build_memcached() {
+  build_osv "memcached" all none
+  prepare_package "osv.memcached" "memcached" "2.7.0"
+  build "osv.memcached"
+}
+
+build_mysql() {
+  build_osv "mysql" all none
+  prepare_package "osv.mysql" "mysql" "5.6.21""
+  build "osv.mysql"
+}
+
 #clean_osv
 
-build_osv_loader_and_boostrap_package
-build_run_java_package
-build_run_go_package
+#build_osv_loader_and_boostrap_package
+#build_run_java_package
+#build_run_go_package
 
-####build_openjdk8-compact_profile_package 1 "8.0.144" #Should be identified automatically
-####build_openjdk8-zulu-compact3-with-java-beans_package "8.0.144"
-####build_openjdk8-full_package "8.0.144"
+#build_httpserver_api_package
+#build_httpserver_html5_gui_package
+#build_httpserver_html5_cli_package
 
-build_httpserver_api_package
-build_httpserver_html5_gui_package
-build_httpserver_html5_cli_package
-
-#build_node_package
+#build_cli
 #build_lighttpd
 #build_nginx
+#build_iperf
+#build_redis-memonly
+#build_memcached
+#build_mysql

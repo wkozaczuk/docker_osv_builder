@@ -37,7 +37,7 @@ libboost1.65-all-dev \
 libedit-dev \
 libmaven-shade-plugin-java \
 libncurses5-dev \
-libssl-dev \
+libssl1.0-dev \
 libtool \
 libvirt-bin \
 libyaml-cpp-dev \
@@ -45,7 +45,7 @@ maven \
 nodejs \
 npm \
 openjdk-8-jdk-headless \
-openssl \
+openssl1.0 \
 p11-kit \
 python-dpkt \
 python-requests \
