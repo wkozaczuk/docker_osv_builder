@@ -166,7 +166,7 @@ build_memcached() {
 
 build_mysql() {
   build_osv "mysql" all none
-  prepare_package "osv.mysql" "mysql" "5.6.21""
+  prepare_package "osv.mysql" "mysql" "5.6.21"
   build "osv.mysql"
 }
 

@@ -23,6 +23,8 @@ autoconf \
 automake \
 bison \
 build-essential \
+ca-certificates \
+cmake \
 curl \
 ed \
 flex \
@@ -35,12 +37,14 @@ git \
 gnutls-bin \
 libboost1.65-all-dev \
 libedit-dev \
+libevent-dev \
 libmaven-shade-plugin-java \
 libncurses5-dev \
 libssl1.0-dev \
 libtool \
 libvirt-bin \
 libyaml-cpp-dev \
+libbz2-dev \
 maven \
 nodejs \
 npm \
