@@ -8,5 +8,5 @@ docker build -t osv/builder .
 
 Run container
 ```
-docker run -it --volume="$PWD/result:/result" osv/builder
+docker run -it --privileged --volume="$PWD/result:/result" osv/builder
 ```
