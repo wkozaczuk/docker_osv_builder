@@ -14,8 +14,16 @@ build_osv() {
   export_mode="$2"
   usrskel="$3"
 
+  echo "-------------------------------------"
+  echo "- Building OSv image $image ...      "
+  echo "-------------------------------------"
+
   cd "$OSV_ROOT"
   ./scripts/build -j4 image="$image" export="$export_mode" usrskel="$usrskel"
+
+  echo "-------------------------------------"
+  echo "- Built OSv image $image             "
+  echo "-------------------------------------"
 }
 
 prepare_package() {
@@ -32,8 +40,12 @@ prepare_package() {
 build_package() {
   package_name="$1"
   cd $PACKAGES/$package_name && $CAPSTAN package build
-  mkdir -p $PACKAGES/mpms
-  mv $PACKAGES/$package_name/*.mpm $PACKAGES/mpms && rm -rf $PACKAGES/$package_name
+  mkdir -p $PACKAGES/artifacts
+  mv $PACKAGES/$package_name/$package_name.mpm $PACKAGES/artifacts && rm -rf $PACKAGES/$package_name
+
+  echo "-------------------------------------"
+  echo "- Built package $package_name        "
+  echo "-------------------------------------"
 }
 
 build_osv_loader_and_boostrap_package() {
@@ -45,6 +57,8 @@ build_osv_loader_and_boostrap_package() {
   cp $OSV_BUILD/loader.img $PACKAGES/osv.loader/osv-loader.qemu
   mkdir -p $CAPSTAN_LOCAL_REPO/repository/mike/osv-loader/
   cp $PACKAGES/osv.loader/osv-loader.qemu $CAPSTAN_LOCAL_REPO/repository/mike/osv-loader/
+  mkdir -p $PACKAGES/artifacts
+  cp $PACKAGES/osv.loader/osv-loader.qemu $PACKAGES/artifacts
 
   #Create bootstrap package
   prepare_package "osv.bootstrap" "OSv Bootstrap" "$OSV_VERSION"

@@ -50,7 +50,6 @@ libyaml-cpp-dev \
 libbz2-dev \
 maven \
 nodejs \
-npm \
 openjdk-8-jdk-headless \
 openssl1.0 \
 p11-kit \
@@ -61,6 +60,9 @@ qemu-utils \
 tcpdump \
 unzip \
 wget && apt-get autoremove && apt-get clean
+
+#Install npm separately
+RUN apt-get update -y && apt-get install -y npm && apt-get autoremove && apt-get clean
 
 RUN update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
@@ -92,5 +94,5 @@ CMD /bin/bash
 # docker build -t osv/builder .
 #
 # Run this container with:
-# docker run -it --volume="$PWD/result:/result" osv/builder
+# docker run -it --privileged --volume="$PWD/result:/result" osv/builder
 #

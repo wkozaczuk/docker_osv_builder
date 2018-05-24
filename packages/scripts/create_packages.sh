@@ -2,18 +2,23 @@
 
 source $(dirname $0)/commons.sh
 
-create_all_packages() {
-  clean_osv
+#build_osv_loader_and_boostrap_package
+#build_nginx_package
+#build_node_package
+#build_mysql_package
 
-  build_osv_loader_and_boostrap_package
+create_all_packages() {
+#  clean_osv
+
+#  build_osv_loader_and_boostrap_package
   build_run_java_package
   build_run_go_package
   build_node_package
 
   build_httpserver_api_package
-  build_httpserver_html5_gui_package
-  build_httpserver_html5_cli_package
-  build_cli_package
+  #build_httpserver_html5_gui_package
+  #build_httpserver_html5_cli_package
+  #build_cli_package
 
   build_lighttpd_package
   build_nginx_package
@@ -23,3 +28,6 @@ create_all_packages() {
   build_memcached_package
   build_mysql_package
 }
+
+#create_all_packages
+build_$1_package
