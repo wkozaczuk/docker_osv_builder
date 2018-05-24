@@ -5,7 +5,9 @@
 # This work is open source software, licensed under the terms of the
 # BSD license as described in the LICENSE file in the top-level directory.
 #
-
+# This Docker file defines a container intended to build, test and publish
+# OSv kernel as well as many applications ...
+#
 FROM ubuntu:18.04
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -15,7 +17,8 @@ COPY ./etc/keyboard /etc/default/keyboard
 COPY ./etc/console-setup /etc/default/console-setup
 
 #
-# PREREQUISITES
+# PREREQUISITES for building OSv kernel as well as many applications from apps folder
+# Ping GCC and boost, other just tools
 #
 RUN apt-get update -y && apt-get install -y \
 ant \
@@ -86,8 +89,8 @@ CMD /bin/bash
 # NOTES
 #
 # Build this container with (add --no-cache flag to rebuild also OSv):
-# docker build -t mikelangelo/capstan-packages .
+# docker build -t osv/builder .
 #
 # Run this container with:
-# docker run -it --volume="$PWD/result:/result" mikelangelo/capstan-packages
+# docker run -it --volume="$PWD/result:/result" osv/builder
 #
