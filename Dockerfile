@@ -43,15 +43,16 @@ libedit-dev \
 libevent-dev \
 libmaven-shade-plugin-java \
 libncurses5-dev \
-libssl1.0-dev \
+libssl-dev \
 libtool \
 libvirt-bin \
 libyaml-cpp-dev \
 libbz2-dev \
 maven \
 nodejs \
+npm \
 openjdk-8-jdk-headless \
-openssl1.0 \
+openssl \
 p11-kit \
 python-dpkt \
 python-requests \
@@ -60,9 +61,6 @@ qemu-utils \
 tcpdump \
 unzip \
 wget && apt-get autoremove && apt-get clean
-
-#Install npm separately
-RUN apt-get update -y && apt-get install -y npm && apt-get autoremove && apt-get clean
 
 RUN update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
@@ -84,15 +82,15 @@ RUN curl https://raw.githubusercontent.com/mikelangelo-project/capstan/master/sc
 # Copy capstan packages 
 WORKDIR /capstan-packages
 COPY ./packages/* /capstan-packages
+RUN mkdir /capstan-packages/output
 
 CMD /bin/bash
 
 #
 # NOTES
 #
-# Build this container with (add --no-cache flag to rebuild also OSv):
+# Build this container with:
 # docker build -t osv/builder .
 #
 # Run this container with:
-# docker run -it --privileged --volume="$PWD/result:/result" osv/builder
-#
+# docker run -it --privileged --volume="/capstan-packages/output:/artifacts" osv/builder
