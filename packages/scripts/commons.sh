@@ -93,7 +93,6 @@ build_openjdk8-full_package() {
   package_name="osv.openjdk8-zulu-full"
   build_osv "openjdk8-zulu-full" selected none
   prepare_package "$package_name" "Zulu Open JDK 8" "$version"
-  #cd $PACKAGES/osv.openjdk8-zulu-full/usr/lib/jvm/ && rm jre && rmdir java && ln -s j2re-compact${profile}-image/jre jre
   cd $PACKAGES/${package_name} && cp $OSV_ROOT/modules/ca-certificates/build/etc/pki/ca-trust/extracted/java/cacerts usr/lib/jvm/jre/lib/security/
   build_package "$package_name"
 }
@@ -108,23 +107,31 @@ build_openjdk8-zulu-compact3-with-java-beans_package() {
   build_package "$package_name"
 }
 
+build_openjdk10-java-base_package() {
+  package_name="osv.openjdk10-java-base"
+  build_osv "openjdk10-java-base" selected none
+  prepare_package "$package_name" "Open JDK 10 (java-base)" "10.0.1"
+  cd $PACKAGES/${package_name} && cp $OSV_ROOT/modules/ca-certificates/build/etc/pki/ca-trust/extracted/java/cacerts usr/lib/jvm/jre/lib/security/
+  build_package "$package_name"
+}
+
 build_httpserver_api_package() {
   build_osv "httpserver-api" all none
-  prepare_package "osv.httpserver-api" "OSv httpserver with APIs" "$OSV_VERSION"
+  prepare_package "osv.httpserver-api" "OSv httpserver with APIs (backend)" "$OSV_VERSION"
   rm $PACKAGES/osv.httpserver-api/usr/mgmt/plugins/libhttpserver-api_app.so  
   build_package "osv.httpserver-api"
 }
 
 build_httpserver_html5_gui_package() {
   build_osv "httpserver-html5-gui" selected none
-  prepare_package "osv.httpserver-html5-gui" "OSv HTML5 GUI" "$OSV_VERSION"
+  prepare_package "osv.httpserver-html5-gui" "OSv HTML5 GUI (frontend)" "$OSV_VERSION"
   rm -rf $PACKAGES/osv.httpserver-html5-gui/init/
   build_package "osv.httpserver-html5-gui"
 }
 
 build_httpserver_html5_cli_package() {
-  build_osv "httpserver-html5-cli" selected none
-  prepare_package "osv.httpserver-html5-cli" "OSv HTML5 cli" "$OSV_VERSION"
+  build_osv "httpserver-html5-cli.fg" selected none
+  prepare_package "osv.httpserver-html5-cli" "OSv HTML5 Terminal (frontend)" "$OSV_VERSION"
   rm -rf $PACKAGES/osv.httpserver-html5-cli/init/
   build_package "osv.httpserver-html5-cli"
 }
@@ -136,7 +143,9 @@ build_node_package() {
 }
 
 build_cli_package() {
+  apt-get install -y openssl1.0 libssl1.0-dev
   build_osv "cli" all none
+  apt-get install -y libssl-dev node-gyp nodejs-dev npm
   prepare_package "osv.cli" "Command Line" "$OSV_VERSION"
   build_package "osv.cli"
 }

@@ -93,4 +93,4 @@ CMD /bin/bash
 # docker build -t osv/builder .
 #
 # Run this container with:
-# docker run -it --privileged --volume="/capstan-packages/output:/artifacts" osv/builder
+# docker run -it --privileged --volume="/artifacts:/capstan-packages/output" osv/builder
