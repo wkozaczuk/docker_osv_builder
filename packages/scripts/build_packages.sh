@@ -2,13 +2,13 @@
 
 if [ "$1" == "" ]
 then
-  echo "Usage: create_packages.sh <package_name>|all"
+  echo "Usage: build_packages.sh <package_name>|all"
   exit 1
 fi
 
 source $(dirname $0)/commons.sh
 
-create_all_packages() {
+build_all_packages() {
   build_osv_loader_and_boostrap_package # kernel + common bootstrap
   build_run_java_package # bootstrap for JREs (Java Runtime Environment)
   build_run_go_package # bootstrap for Golang apps 
@@ -31,11 +31,11 @@ create_all_packages() {
 
 case "$1" in
   all)
-    echo "Creating all packages ..."
-    create_all_packages;;
+    echo "Building all packages ..."
+    build_all_packages;;
   osv_loader_and_boostrap|run_java|run_go|node|openjdk10-java-base|httpserver_api|\
   httpserver_html5_gui|httpserver_html5_cli|cli|lighttpd|nginx|iperf|netperf|redis|memcached|mysql)
-    echo "Creating package $1 ..."
+    echo "Building package $1 ..."
     build_$1_package;;
   *)
     echo "Unrecognised which package to build!"
