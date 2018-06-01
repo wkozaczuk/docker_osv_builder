@@ -22,7 +22,10 @@ case "$1" in
     echo "Publishing all packages ..."
     cp $SOURCE_PATH/osv-loader.qemu $CAPSTAN_KERNEL_PATH
     cp $SOURCE_PATH/*.mpm $SOURCE_PATH/*.yaml $CAPSTAN_PACKAGES_PATH;;
-  osv_loader_and_boostrap|run_java|run_go|node|openjdk10-java-base|httpserver_api|\
+  kernel)
+    echo "Publishing OSv kernel ..."
+    cp $SOURCE_PATH/osv-loader.qemu $CAPSTAN_KERNEL_PATH;;
+  bootstrap|run_java|run_go|node|openjdk10-java-base|httpserver_api|\
   httpserver_html5_gui|httpserver_html5_cli|cli|lighttpd|nginx|iperf|netperf|redis-memonly|memcached|mysql)
     echo "Publishing package $1 ..."
     cp $SOURCE_PATH/osv.$1.mpm $SOURCE_PATH/osv.$1.yaml $CAPSTAN_PACKAGES_PATH;;

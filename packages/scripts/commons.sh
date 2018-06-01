@@ -67,7 +67,7 @@ build_package() {
   echo "-------------------------------------"
 }
 
-build_osv_loader_and_boostrap_package() {
+build_osv_loader_and_bootstrap_package() {
   #Build osv.loader and files that will make up bootstrap package
   build_osv empty all default
 

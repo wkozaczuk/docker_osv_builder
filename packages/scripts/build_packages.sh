@@ -9,7 +9,7 @@ fi
 source $(dirname $0)/commons.sh
 
 build_all_packages() {
-  build_osv_loader_and_boostrap_package # kernel + common bootstrap
+  build_osv_loader_and_bootstrap_package # kernel + common bootstrap
   build_run_java_package # bootstrap for JREs (Java Runtime Environment)
   build_run_go_package # bootstrap for Golang apps 
   build_node_package # Node.JS runtime
@@ -33,7 +33,7 @@ case "$1" in
   all)
     echo "Building all packages ..."
     build_all_packages;;
-  osv_loader_and_boostrap|run_java|run_go|node|openjdk10-java-base|httpserver_api|\
+  osv_loader_and_bootstrap|run_java|run_go|node|openjdk10-java-base|httpserver_api|\
   httpserver_html5_gui|httpserver_html5_cli|cli|lighttpd|nginx|iperf|netperf|redis|memcached|mysql)
     echo "Building package $1 ..."
     build_$1_package;;
