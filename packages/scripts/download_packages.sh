@@ -1,9 +1,10 @@
 #!/bin/bash
 
 set -e
+
 if [ "$1" == "" ]
 then
-  echo "Usage: download_packages.sh <package_name>|all"
+  echo "Usage: download_packages.sh <package_name>|all <release_number>?"
   exit 1
 fi
 
@@ -12,7 +13,9 @@ command -v curl || (echo "Install curl" && exit -1)
 CAPSTAN_LOCAL_REPO=$HOME/.capstan
 CAPSTAN_KERNEL_PATH=$CAPSTAN_LOCAL_REPO/repository/mike/osv-loader
 CAPSTAN_PACKAGES_PATH=$CAPSTAN_LOCAL_REPO/packages
-RELEASE=0.51.0
+
+RELEASE_ARG=$2
+RELEASE=${RELEASE_ARG:-"0.51.0"}
 
 mkdir -p $CAPSTAN_KERNEL_PATH
 mkdir -p $CAPSTAN_PACKAGES_PATH
