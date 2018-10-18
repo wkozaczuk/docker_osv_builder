@@ -34,6 +34,7 @@ prepare_package() {
 
   rm -rf $PACKAGES/$package_name
   mkdir -p $PACKAGES/$package_name
+  mkdir -p $OUTPUT/$package_name
   if [ "$dependency" == "" ]
   then
     cd $PACKAGES/$package_name && $CAPSTAN package init --name "$package_name" --title "$title" --author "Waldek Kozaczuk" --version "$version"
@@ -222,4 +223,14 @@ build_mysql_package() {
   prepare_package "osv.mysql" "MySQL" "5.6.40"
   set_package_command_line "osv.mysql" "/usr/bin/mysqld --datadir=/usr/data --user=root"
   build_package "osv.mysql"
+}
+
+build_generic_app_package() {
+  app_name="$1"
+  version="$2"
+  command_line="$3"
+  build_osv "$app_name" selected none
+  prepare_package "osv.$app_name" "$app_name" "$version"
+  set_package_command_line "$app_name" "$command_line"
+  build_package "$app_name"
 }
