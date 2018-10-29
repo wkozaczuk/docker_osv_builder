@@ -8,7 +8,7 @@
 # This Docker file defines a container intended to build, test and publish
 # OSv kernel as well as many applications ...
 #
-FROM ubuntu:18.04
+FROM ubuntu:18.10
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV TERM=linux
@@ -31,26 +31,24 @@ cmake \
 curl \
 ed \
 flex \
-gcc-7 \
-g++-7-multilib \
+gcc-8 \
+g++-8-multilib \
 gdb \
 gawk \
 genromfs \
 git \
 gnutls-bin \
-libboost1.65-all-dev \
+libboost1.67-all-dev \
 libedit-dev \
 libevent-dev \
 libmaven-shade-plugin-java \
 libncurses5-dev \
 libssl-dev \
 libtool \
-libvirt-bin \
 libyaml-cpp-dev \
 libbz2-dev \
 maven \
 nodejs \
-npm \
 openjdk-8-jdk-headless \
 openssl \
 p11-kit \
@@ -58,9 +56,13 @@ python-dpkt \
 python-requests \
 qemu-system-x86 \
 qemu-utils \
+rsync \
 tcpdump \
 unzip \
+yasm \
 wget && apt-get autoremove && apt-get clean
+#libvirt-bin \
+#npm \
 
 RUN update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 

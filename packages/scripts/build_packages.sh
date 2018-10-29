@@ -28,7 +28,7 @@ build_all_packages() {
   build_memcached_package # app
   build_mysql_package # app
 
-  build_generic_app_package "python3" "3.6.6" "--env=TERM=unknown /python3"
+  build_generic_app_package "python3x" "3.6.6" "--env=TERM=unknown /python3"
   build_generic_app_package "ffmpeg" "4.0.2" "/ffmpeg.so -formats"
 }
 
@@ -39,7 +39,7 @@ case "$1" in
   osv_loader_and_bootstrap|run_java|run_go|node|openjdk10-java-base|openjdk8-full|openjdk8-zulu-compact3-with-java-beans|httpserver_api|\
   httpserver_html5_gui|httpserver_html5_cli|cli|lighttpd|nginx|iperf|netperf|redis|memcached|mysql|generic_app)
     echo "Building package $1 ..."
-    build_$1_package $2 $3;;
+    build_$1_package $2 $3 $4;;
   *)
     echo "Unrecognised which package to build!"
 esac
