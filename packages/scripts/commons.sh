@@ -141,7 +141,7 @@ build_openjdk10-java-base_package() {
 build_httpserver_api_package() {
   build_osv "httpserver-api.fg" all none
   prepare_package "osv.httpserver-api" "OSv httpserver with APIs (backend)" "$OSV_VERSION"
-  rm $PACKAGES/osv.httpserver-api/usr/mgmt/plugins/libhttpserver-api_app.so  
+  #rm $PACKAGES/osv.httpserver-api/usr/mgmt/plugins/libhttpserver-api_app.so  
   build_package "osv.httpserver-api"
 }
 
