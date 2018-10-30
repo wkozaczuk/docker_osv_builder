@@ -2,7 +2,7 @@
 
 source $(dirname $0)/env.sh
 OSV_BUILD=$OSV_ROOT/build/release
-OSV_VERSION="0.51.0"
+OSV_VERSION="0.52.0"
 
 clean_osv() {
   cd "$OSV_ROOT"

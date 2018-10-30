@@ -17,7 +17,7 @@ build_all_packages() {
 
   build_httpserver_api_package # helper httpserver app
   build_httpserver_html5_gui_package # OSv gui -> depends on httpserver_api
-  build_httpserver_html5_cli_package # OSv HTML5 terminal -> depends on httpserver_api
+  #build_httpserver_html5_cli_package # OSv HTML5 terminal -> depends on httpserver_api
   build_cli_package #OSv clasical terminal -> depends on httpserver_api
 
   build_lighttpd_package # app
