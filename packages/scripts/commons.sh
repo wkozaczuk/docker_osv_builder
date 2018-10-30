@@ -234,3 +234,11 @@ build_generic_app_package() {
   set_package_command_line "osv.$app_name" "$command_line"
   build_package "osv.$app_name"
 }
+
+build_generic_lib_package() {
+  app_name="$1"
+  version="$2"
+  build_osv "$app_name" selected none
+  prepare_package "osv.$app_name" "$app_name" "$version"
+  build_package "osv.$app_name"
+}

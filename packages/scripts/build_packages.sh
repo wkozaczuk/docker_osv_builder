@@ -30,6 +30,7 @@ build_all_packages() {
 
   build_generic_app_package "python3x" "3.6.6" "--env=TERM=unknown /python3"
   build_generic_app_package "ffmpeg" "4.0.2" "/ffmpeg.so -formats"
+  build_generic_lib_package "libz" "1.0.0"
 }
 
 case "$1" in
@@ -37,7 +38,7 @@ case "$1" in
     echo "Building all packages ..."
     build_all_packages;;
   osv_loader_and_bootstrap|run_java|run_go|node|openjdk10-java-base|openjdk8-full|openjdk8-zulu-compact3-with-java-beans|httpserver_api|\
-  httpserver_html5_gui|httpserver_html5_cli|cli|lighttpd|nginx|iperf|netperf|redis|memcached|mysql|generic_app)
+  httpserver_html5_gui|httpserver_html5_cli|cli|lighttpd|nginx|iperf|netperf|redis|memcached|mysql|generic_app|generic_lib)
     echo "Building package $1 ..."
     build_$1_package $2 $3 $4;;
   *)
