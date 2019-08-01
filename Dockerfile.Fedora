@@ -1,0 +1,60 @@
+#
+# Copyright (C) 2017 XLAB, Ltd.
+# Copyright (C) 2018 Waldemar Kozaczuk
+#
+# This work is open source software, licensed under the terms of the
+# BSD license as described in the LICENSE file in the top-level directory.
+#
+# This Docker file defines a container intended to build, test and publish
+# OSv kernel as well as many applications ...
+#
+#FROM fedora:27
+FROM fedora:29
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV TERM=linux
+
+COPY ./etc/keyboard /etc/default/keyboard
+COPY ./etc/console-setup /etc/default/console-setup
+
+RUN yum install -y git python2 file which
+
+#
+# PREPARE ENVIRONMENT
+#
+
+# - prepare directories
+RUN mkdir /git-repos /result
+# - clone OSv
+WORKDIR /git-repos
+RUN git clone https://github.com/cloudius-systems/osv.git
+WORKDIR /git-repos/osv
+RUN git submodule update --init --recursive
+RUN scripts/setup.py
+
+RUN update-alternatives --set java /usr/lib/jvm/java-1.8.0-openjdk/bin/java
+
+# - install Mikelangelo Capstan
+#RUN curl https://raw.githubusercontent.com/mikelangelo-project/capstan/master/scripts/download | bash
+
+# Copy capstan packages 
+#WORKDIR /capstan-packages
+#COPY ./packages/* /capstan-packages
+#RUN mkdir /capstan-packages/output
+
+CMD /bin/bash
+
+#
+# NOTES
+#
+# Build this container with:
+# docker build -t osv/builder-fedora -f Dockerfile.Fedora .
+#
+# Run this container with:
+# docker run -it --privileged --volume="/artifacts:/capstan-packages/output" osv/builder-fedora
+# 
+# To restart:
+# docker restart ID (from docker ps -a) && docker attach ID
+#
+# To open in another console
+# docker exec -it ID /bin/bash
